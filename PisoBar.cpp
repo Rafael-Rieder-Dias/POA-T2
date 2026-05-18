@@ -34,12 +34,31 @@ unsigned int PisoBar::get_b_atual(){return this->b_atual;}
 
 unsigned int PisoBar::get_c_atual(){return this->c_atual;}
 
-bool PisoBar::add(unsigned int x, unsigned int y, char quadrilha){
-    if(x >= this->n || y >= this->n || (quadrilha != bigodudos && quadrilha != capetas)) return false;
+bool PisoBar::add_b(unsigned int x, unsigned int y){
+    if(x >= this->n || y >= this->n) return false;
 
     if(this->matriz[x][y] != 0) return false;
 }
 
-bool PisoBar::pronto(){
+bool PisoBar::add_c(unsigned int x, unsigned int y){
+    if(x >= this->n || y >= this->n) return false;
+
+    if(this->matriz[x][y] != 0) return false;
+}
+
+bool PisoBar::todos_pistoleiros_posiciondos(){
     return this->b_atual == this->b && this->c_atual == this->c;
+}
+
+bool PisoBar::solucao_valida(){
+    if(!this->todos_pistoleiros_posiciondos()) return false;
+
+
+}
+
+void PisoBar::desalocaMatriz(){
+    for(int i = 0; i < this->n; i++){
+        delete [] matriz[i];
+    }
+    delete [] matriz;
 }

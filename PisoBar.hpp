@@ -27,6 +27,14 @@ class PisoBar{
         unsigned int get_c();
         unsigned int get_b_atual();
         unsigned int get_c_atual();
-        bool add(unsigned int x, unsigned int y, char quadrilha);
-        bool pronto();
+        //adiciona um bigodudo (ainda não há capetas para saber se o bigodudo conseguirá ver 2)
+        bool add_b(unsigned int x, unsigned int y);
+        //adiciona um capeta (verificar que desta posição dá para ver pelo menos 2 bigodudos)
+        bool add_c(unsigned int x, unsigned int y);
+        //verifica se todos os bigodudos conseguem ver pelo menos 2 capetas
+        bool cada_bigodudo_ve_dois_capetas();
+        bool todos_pistoleiros_posiciondos();
+        bool solucao_valida();
+        void desalocaMatriz();
+
 };
