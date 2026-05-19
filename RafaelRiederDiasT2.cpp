@@ -14,7 +14,7 @@ unsigned long long solucoes = 0;
  * quadrilha e nenhum da sua. São pelo menos dois dos outros pra poder apontar uma arma
  * para cada um, igual nos filmes.
  */
-
+void posicionaCapetas(PisoBar pb);
 void posicionaBigodudos(PisoBar pb){
     PisoBar aux = pb.clone();
 
@@ -70,5 +70,7 @@ int main(int argc, char* argv[]){
         exit(0);
     }
 
+    posicionaBigodudos(PisoBar(n,b,c));
 
+    cout << "Numero de solucoes: " << solucoes << endl;
 }

@@ -20,7 +20,7 @@ class PisoBar{
         //matriz de posições dos pistoleiros
         char** matriz;
         //função auxiliar privada
-        bool priv_cada_bigodudo_ve_dois_capetas(unsigned int x, unsigned int y);
+        bool priv_bigodudo_ve_dois_capetas(unsigned int x, unsigned int y);
 
     public:
         PisoBar(unsigned int n_, unsigned int b_, unsigned int c_);

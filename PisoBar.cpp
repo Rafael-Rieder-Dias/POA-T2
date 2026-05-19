@@ -2,7 +2,7 @@
 
 char** alocaMatriz(unsigned int n){
     char** m = new char*[n];
-    for(int i = 0; i < n; i++){
+    for(unsigned int i = 0; i < n; i++){
         m[i] = new char[n];
     }
     return m;
@@ -161,15 +161,62 @@ bool PisoBar::cada_bigodudo_ve_dois_capetas(){
     for(unsigned int x = 0; x < this->n; x++){
         for(unsigned int y = 0; y < this->n; y++){
             if(this->matriz[x][y] == bigodudos){
-                if(!this->priv_cada_bigodudo_ve_dois_capetas(x,y)) return false;
+                if(!this->priv_bigodudo_ve_dois_capetas(x,y)) return false;
             }
         }
     }
     return true;
 }
 
-bool PisoBar::priv_cada_bigodudo_ve_dois_capetas(unsigned int x, unsigned int y){
-    
+bool PisoBar::priv_bigodudo_ve_dois_capetas(unsigned int x, unsigned int y){
+    unsigned int capetas_em_vista = 0;
+
+    for(unsigned int i = 0; i < this->n; i++){
+        if(this->matriz[x][i] == capetas) capetas_em_vista++;
+        if(this->matriz[i][y] == capetas) capetas_em_vista++;
+    }
+
+    if(capetas_em_vista >= 2) return true;
+
+    //diagonal superior esquerda
+    int i = x - 1;
+    int j = y - 1;
+    while(i >= 0 && j >= 0){
+        if(this->matriz[i][j] == capetas) capetas_em_vista++;
+        i--;
+        j--;
+    }
+
+    //diagonal superior direita
+    i = x - 1;
+    j = y + 1;
+    while(i >= 0 && j < this->n){
+        if(this->matriz[i][j] == capetas) capetas_em_vista++;
+        i--;
+        j++;
+    }
+
+    if(capetas_em_vista >= 2) return true;
+
+    //diagonal inferior esquerda
+    i = x + 1;
+    j = y - 1;
+    while(i < this->n && j >= 0){
+        if(this->matriz[i][j] == capetas) capetas_em_vista++;
+        i++;
+        j--;
+    }
+
+    i = x + 1;
+    j = y + 1;
+    while(i < this->n && j < this->n){
+        if(this->matriz[i][j] == capetas) capetas_em_vista++;
+        i++;
+        j++;
+    }
+
+    if(capetas_em_vista < 2) return false;
+    return true;    
 }
 
 PisoBar PisoBar::clone(){
