@@ -1,3 +1,4 @@
+#ifndef PISOBAR_HPP
 #define PISOBAR_HPP
 
 const char bigodudos = 'b';
@@ -41,3 +42,5 @@ class PisoBar{
         void desalocaMatriz();
 
 };
+
+#endif

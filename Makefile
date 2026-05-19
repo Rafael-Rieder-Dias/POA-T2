@@ -16,7 +16,7 @@ CXXFLAGS = -std=c++20 \
            -Wextra
 
 # Arquivos fonte
-SRC = RafaelRiederDiasT2.cpp PisoBar.cpp
+SRC = RafaelRiederDiasT2.cpp PisoBar.cpp Funcoes.cpp
 
 # Objetos
 OBJ = $(SRC:.cpp=.o)
@@ -29,7 +29,7 @@ $(TARGET): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJ)
 
 # Compilação dos .cpp
-%.o: %.cpp PisoBar.hpp
+%.o: %.cpp PisoBar.hpp Funcoes.hpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 # Limpeza
