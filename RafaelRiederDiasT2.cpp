@@ -3,7 +3,7 @@
 
 using namespace std;
 
-unsigned int n = 0; unsigned int b = 0; unsigned int c = 0;
+int n = 0; int b = 0; int c = 0;
 unsigned long long solucoes = 0;
 
 /**
@@ -18,8 +18,8 @@ void posicionaCapetas(PisoBar pb);
 void posicionaBigodudos(PisoBar pb){
     PisoBar aux = pb.clone();
 
-    for(unsigned int x = 0; x < pb.get_n(); x++){
-        for(unsigned int y = 0; y < pb.get_n(); y++){
+    for(int x = 0; x < pb.get_n(); x++){
+        for(int y = 0; y < pb.get_n(); y++){
             if(aux.add_b(x,y)){
                 if(aux.bigodudos_prontos()) posicionaCapetas(aux);
                 else posicionaBigodudos(aux);
@@ -35,8 +35,8 @@ void posicionaBigodudos(PisoBar pb){
 void posicionaCapetas(PisoBar pb){
     PisoBar aux = pb.clone();
 
-    for(unsigned int x = 0; x < pb.get_n(); x++){
-        for(unsigned int y = 0; y < pb.get_n(); y++){
+    for(int x = 0; x < pb.get_n(); x++){
+        for(int y = 0; y < pb.get_n(); y++){
             if(aux.add_c(x,y)){
                 if(aux.capetas_prontos()){
                     if(aux.cada_bigodudo_ve_dois_capetas()) solucoes++;

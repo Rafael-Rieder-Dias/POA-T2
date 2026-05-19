@@ -1,14 +1,14 @@
 #include "PisoBar.hpp"
 
-char** alocaMatriz(unsigned int n){
+char** alocaMatriz(int n){
     char** m = new char*[n];
-    for(unsigned int i = 0; i < n; i++){
+    for(int i = 0; i < n; i++){
         m[i] = new char[n];
     }
     return m;
 }
 
-PisoBar::PisoBar(unsigned int n_, unsigned int b_, unsigned int c_){
+PisoBar::PisoBar(int n_, int b_, int c_){
     this->n = n_;
     this->b = b_;
     this->c = c_;
@@ -26,19 +26,19 @@ PisoBar::PisoBar(){
     this->matriz = nullptr;
 }
 
-unsigned int PisoBar::get_n(){return this->n;}
+int PisoBar::get_n(){return this->n;}
 
 bool PisoBar::bigodudos_prontos(){return this->b_atual == this->b;}
 bool PisoBar::capetas_prontos(){return this->c_atual == this->c;}
 
-bool PisoBar::add_b(unsigned int x, unsigned int y){
+bool PisoBar::add_b(int x, int y){
     if(this->b_atual == this->b) return false;
 
     if(x >= this->n || y >= this->n) return false;
 
     if(this->matriz[x][y] != 0) return false;
 
-    for(unsigned int i = 0; i < this->n; i++){
+    for(int i = 0; i < this->n; i++){
         if(this->matriz[x][i] == bigodudos) return false;
         if(this->matriz[i][y] == bigodudos) return false;
     }
@@ -83,16 +83,16 @@ bool PisoBar::add_b(unsigned int x, unsigned int y){
     return true;
 }
 
-bool PisoBar::add_c(unsigned int x, unsigned int y){
+bool PisoBar::add_c(int x, int y){
     if(this->c_atual == this->c) return false;
 
     if(x >= this->n || y >= this->n) return false;
 
     if(this->matriz[x][y] != 0) return false;
 
-    unsigned int bigodudos_em_vista = 0;
+    int bigodudos_em_vista = 0;
 
-    for(unsigned int i = 0; i < this->n; i++){
+    for(int i = 0; i < this->n; i++){
         if(this->matriz[x][i] == capetas){
             return false;
         }else if(this->matriz[x][i] == bigodudos) bigodudos_em_vista++;
@@ -158,8 +158,8 @@ bool PisoBar::add_c(unsigned int x, unsigned int y){
 }
 
 bool PisoBar::cada_bigodudo_ve_dois_capetas(){
-    for(unsigned int x = 0; x < this->n; x++){
-        for(unsigned int y = 0; y < this->n; y++){
+    for(int x = 0; x < this->n; x++){
+        for(int y = 0; y < this->n; y++){
             if(this->matriz[x][y] == bigodudos){
                 if(!this->priv_bigodudo_ve_dois_capetas(x,y)) return false;
             }
@@ -168,10 +168,10 @@ bool PisoBar::cada_bigodudo_ve_dois_capetas(){
     return true;
 }
 
-bool PisoBar::priv_bigodudo_ve_dois_capetas(unsigned int x, unsigned int y){
-    unsigned int capetas_em_vista = 0;
+bool PisoBar::priv_bigodudo_ve_dois_capetas(int x, int y){
+    int capetas_em_vista = 0;
 
-    for(unsigned int i = 0; i < this->n; i++){
+    for(int i = 0; i < this->n; i++){
         if(this->matriz[x][i] == capetas) capetas_em_vista++;
         if(this->matriz[i][y] == capetas) capetas_em_vista++;
     }
