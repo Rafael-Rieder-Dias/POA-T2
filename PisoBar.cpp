@@ -26,34 +26,166 @@ PisoBar::PisoBar(){
     this->matriz = nullptr;
 }
 
-unsigned int PisoBar::get_b(){return this->b;}
+unsigned int PisoBar::get_n(){return this->n;}
 
-unsigned int PisoBar::get_c(){return this->c;}
-
-unsigned int PisoBar::get_b_atual(){return this->b_atual;}
-
-unsigned int PisoBar::get_c_atual(){return this->c_atual;}
+bool PisoBar::bigodudos_prontos(){return this->b_atual == this->b;}
+bool PisoBar::capetas_prontos(){return this->c_atual == this->c;}
 
 bool PisoBar::add_b(unsigned int x, unsigned int y){
+    if(this->b_atual == this->b) return false;
+
     if(x >= this->n || y >= this->n) return false;
 
     if(this->matriz[x][y] != 0) return false;
+
+    for(unsigned int i = 0; i < this->n; i++){
+        if(this->matriz[x][i] == bigodudos) return false;
+        if(this->matriz[i][y] == bigodudos) return false;
+    }
+
+    //diagonal superior esquerda
+    int i = x - 1;
+    int j = y - 1;
+    while(i >= 0 && j >= 0){
+        if(this->matriz[i][j] == bigodudos) return false;
+        i--;
+        j--;
+    }
+
+    //diagonal superior direita
+    i = x - 1;
+    j = y + 1;
+    while(i >= 0 && j < this->n){
+        if(this->matriz[i][j] == bigodudos) return false;
+        i--;
+        j++;
+    }
+
+    //diagonal inferior esquerda
+    i = x + 1;
+    j = y - 1;
+    while(i < this->n && j >= 0){
+        if(this->matriz[i][j] == bigodudos) return false;
+        i++;
+        j--;
+    }
+
+    i = x + 1;
+    j = y + 1;
+    while(i < this->n && j < this->n){
+        if(this->matriz[i][j] == bigodudos) return false;
+        i++;
+        j++;
+    }
+
+    this->matriz[x][y] = bigodudos;
+    this->b_atual++;
+    return true;
 }
 
 bool PisoBar::add_c(unsigned int x, unsigned int y){
+    if(this->c_atual == this->c) return false;
+
     if(x >= this->n || y >= this->n) return false;
 
     if(this->matriz[x][y] != 0) return false;
+
+    unsigned int bigodudos_em_vista = 0;
+
+    for(unsigned int i = 0; i < this->n; i++){
+        if(this->matriz[x][i] == capetas){
+            return false;
+        }else if(this->matriz[x][i] == bigodudos) bigodudos_em_vista++;
+        
+
+        if(this->matriz[i][y] == capetas){
+            return false;
+        }else if(this->matriz[x][i] == bigodudos) bigodudos_em_vista++;
+        
+    }
+
+    //diagonal superior esquerda
+    int i = x - 1;
+    int j = y - 1;
+    while(i >= 0 && j >= 0){
+        if(this->matriz[i][j] == capetas){
+            return false;
+        }else if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
+        
+        i--;
+        j--;
+    }
+
+    //diagonal superior direita
+    i = x - 1;
+    j = y + 1;
+    while(i >= 0 && j < this->n){
+        if(this->matriz[i][j] == capetas){
+            return false;
+        }else if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
+        
+        i--;
+        j++;
+    }
+
+    //diagonal inferior esquerda
+    i = x + 1;
+    j = y - 1;
+    while(i < this->n && j >= 0){
+        if(this->matriz[i][j] == capetas){
+            return false;
+        }else if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
+        
+        i++;
+        j--;
+    }
+
+    i = x + 1;
+    j = y + 1;
+    while(i < this->n && j < this->n){
+        if(this->matriz[i][j] == capetas){
+            return false;
+        }else if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
+        
+        i++;
+        j++;
+    }
+
+    if(bigodudos_em_vista < 2) return false;
+    this->matriz[x][y] = capetas;
+    this->c_atual++;
+    return true;
 }
 
-bool PisoBar::todos_pistoleiros_posiciondos(){
-    return this->b_atual == this->b && this->c_atual == this->c;
+bool PisoBar::cada_bigodudo_ve_dois_capetas(){
+    for(unsigned int x = 0; x < this->n; x++){
+        for(unsigned int y = 0; y < this->n; y++){
+            if(this->matriz[x][y] == bigodudos){
+                if(!this->priv_cada_bigodudo_ve_dois_capetas(x,y)) return false;
+            }
+        }
+    }
+    return true;
 }
 
-bool PisoBar::solucao_valida(){
-    if(!this->todos_pistoleiros_posiciondos()) return false;
+bool PisoBar::priv_cada_bigodudo_ve_dois_capetas(unsigned int x, unsigned int y){
+    
+}
 
-
+PisoBar PisoBar::clone(){
+    PisoBar clone = PisoBar();
+    clone.n = this->n;
+    clone.b = this->b;
+    clone.c = this->c;
+    clone.b_atual = this->b_atual;
+    clone.c_atual = this->c_atual;
+    clone.matriz = alocaMatriz(this->n);
+    for(int x = 0; x < this->n; x++){
+        for(int y = 0; y < this->n; y++){
+            clone.matriz[x][y] = this->matriz[x][y];
+        }
+    }
+    return clone;
 }
 
 void PisoBar::desalocaMatriz(){

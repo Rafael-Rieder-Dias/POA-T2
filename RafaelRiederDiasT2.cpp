@@ -15,6 +15,41 @@ unsigned long long solucoes = 0;
  * para cada um, igual nos filmes.
  */
 
+void posicionaBigodudos(PisoBar pb){
+    PisoBar aux = pb.clone();
+
+    for(unsigned int x = 0; x < pb.get_n(); x++){
+        for(unsigned int y = 0; y < pb.get_n(); y++){
+            if(aux.add_b(x,y)){
+                if(aux.bigodudos_prontos()) posicionaCapetas(aux);
+                else posicionaBigodudos(aux);
+
+                aux.desalocaMatriz();
+                aux = pb.clone();
+            }
+        }
+    }
+    aux.desalocaMatriz();
+}
+
+void posicionaCapetas(PisoBar pb){
+    PisoBar aux = pb.clone();
+
+    for(unsigned int x = 0; x < pb.get_n(); x++){
+        for(unsigned int y = 0; y < pb.get_n(); y++){
+            if(aux.add_c(x,y)){
+                if(aux.capetas_prontos()){
+                    if(aux.cada_bigodudo_ve_dois_capetas()) solucoes++;
+                }else posicionaCapetas(aux);
+
+                aux.desalocaMatriz();
+                aux = pb.clone();
+            }
+        }
+    }
+    aux.desalocaMatriz();
+}
+
 int main(int argc, char* argv[]){
     if(argc != 4){
         cout << "Numero de argumentos invalido." << endl;
@@ -29,4 +64,11 @@ int main(int argc, char* argv[]){
         cout << "Cada quadrilha deve ter pelo menos 2 pistoleiros." << endl;
         exit(0);
     }
+
+    if(b + c > n*n){
+        cout << "O numero total de pistoleiros deve ser menor que n²." << endl;
+        exit(0);
+    }
+
+
 }
