@@ -1,6 +1,5 @@
 #include <iostream>
 #include <chrono>
-#include <vector>
 #include "PisoBar.hpp"
 #include "Funcoes.hpp"
 
@@ -8,21 +7,6 @@ using namespace std;
 using namespace chrono;
 
 unsigned long long solucoes = 0;
-
-struct Caso{
-    int n, b, c;
-    int64_t tempo;
-    Caso(){
-        n=b=c=0;
-        tempo = 0;
-    }
-    Caso(int n_, int b_, int c_, int64_t t){
-        n = n_; b = b_; c = c_;
-        tempo = t;
-    }
-};
-
-vector<Caso> casos;
 
 int ni,bi,ci,nf,bf,cf;
 
@@ -52,8 +36,6 @@ int main(int argc, char* argv[]){
     auto inicio = steady_clock::now();
     auto fim = steady_clock::now();
 
-    casos.reserve((nf-ni)*(bf-bi)*(cf-ci));
-
     for(int n = ni; n < nf; n++){
         for(int b = bi; b < bf; b++){
             for(int c = ci; c < cf; c++){
@@ -61,12 +43,8 @@ int main(int argc, char* argv[]){
                 inicio = steady_clock::now();
                 posicionaBigodudos(PisoBar(n,b,c));
                 fim = steady_clock::now();
-                casos.push_back(Caso(n,b,c,duration_cast<milliseconds>(fim-inicio).count()));
+                cout << n << " " << b << " " << c << " " << duration_cast<milliseconds>(fim-inicio).count() << " ms" << endl;
             }
         }
     }
-
-    auto duracao = duration_cast<milliseconds>(fim-inicio);
-    
-    cout << duracao.count() << " ms" << endl;
 }
