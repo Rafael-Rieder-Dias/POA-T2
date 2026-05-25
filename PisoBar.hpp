@@ -45,7 +45,6 @@ class PisoBar{
         void desalocaMatriz();
         bool operator==(const PisoBar& other) const;
         PisoBar& operator=(const PisoBar& other);
-        size_t nn();
 
         struct PisoBarHash{
             size_t operator()(const PisoBar& pb) const;
