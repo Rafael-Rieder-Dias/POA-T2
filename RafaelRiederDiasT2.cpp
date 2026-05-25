@@ -1,11 +1,13 @@
 #include <iostream>
 #include "PisoBar.hpp"
 #include "Funcoes.hpp"
+#include <unordered_set>
 
 using namespace std;
 
 int n = 0; int b = 0; int c = 0;
 unsigned long long solucoes = 0;
+unordered_set<PisoBar, PisoBar::PisoBarHash> estados_visitados = unordered_set<PisoBar, PisoBar::PisoBarHash>();
 
 /**
  * [...] os pistoleiros podiam se “enxergar” como se fossem rainhas do jogo de xadrez, olhando

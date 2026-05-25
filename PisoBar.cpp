@@ -1,4 +1,7 @@
 #include "PisoBar.hpp"
+#include <functional>
+
+using namespace std;
 
 char** alocaMatriz(int n){
     char** m = new char*[n];
@@ -24,6 +27,26 @@ PisoBar::PisoBar(){
     this->b_atual = 0;
     this->c_atual = 0;
     this->matriz = nullptr;
+}
+
+PisoBar::PisoBar(const PisoBar& other){
+    this->n = other.n;
+    this->b = other.b;
+    this->c = other.c;
+    this->b_atual = other.b_atual;
+    this->c_atual = other.c_atual;
+
+    this->matriz = alocaMatriz(this->n);
+
+    for(int x = 0; x < this->n; x++){
+        for(int y = 0; y < this->n; y++){
+            this->matriz[x][y] = other.matriz[x][y];
+        }
+    }
+}
+
+PisoBar::~PisoBar(){
+    this->desalocaMatriz();
 }
 
 int PisoBar::get_n(){return this->n;}
@@ -240,4 +263,56 @@ void PisoBar::desalocaMatriz(){
         delete [] matriz[i];
     }
     delete [] matriz;
+}
+
+bool PisoBar::operator==(const PisoBar& other) const{
+    if(this->n != other.n || this->b != other.b || this->c != other.c
+        || this->b_atual != other.b_atual || this->c_atual != other.c_atual){
+            return false;
+    }
+
+    for(int x = 0; x < this->n; x++){
+        for(int y = 0; y < this->n; y++){
+            if(this->matriz[x][y] != other.matriz[x][y]) return false;
+        }
+    }
+
+    return true;
+}
+
+PisoBar& PisoBar::operator=(const PisoBar& other){
+    if(this == &other) return *this;
+
+    this->desalocaMatriz();
+
+    this->n = other.n;
+    this->b = other.b;
+    this->c = other.c;
+    this->b_atual = other.b_atual;
+    this->c_atual = other.c_atual;
+
+    this->matriz = alocaMatriz(this->n);
+
+    for(int x = 0; x < this->n; x++){
+        for(int y = 0; y < this->n; y++){
+            this->matriz[x][y] = other.matriz[x][y];
+        }
+    }
+
+    return *this;
+}
+
+size_t PisoBar::PisoBarHash::operator()(const PisoBar& pb) const{
+    size_t h = 0;
+
+    for(int x = 0; x < pb.n; x++){
+        for(int y = 0; y < pb.n; y++){
+            h ^= std::hash<char>()(pb.matriz[x][y])
+                    + 0x9e3779b9
+                    + (h << 6)
+                    + (h >> 2);
+        }
+    }
+
+    return h;
 }

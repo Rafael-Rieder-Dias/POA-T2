@@ -2,11 +2,13 @@
 #include <chrono>
 #include "PisoBar.hpp"
 #include "Funcoes.hpp"
+#include <unordered_set>
 
 using namespace std;
 using namespace chrono;
 
 unsigned long long solucoes = 0;
+unordered_set<PisoBar, PisoBar::PisoBarHash> estados_visitados = unordered_set<PisoBar, PisoBar::PisoBarHash>();
 
 int ni,bi,ci,nf,bf,cf;
 
@@ -44,6 +46,7 @@ int main(int argc, char* argv[]){
                 posicionaBigodudos(PisoBar(n,b,c));
                 fim = steady_clock::now();
                 cout << n << " " << b << " " << c << " " << duration_cast<milliseconds>(fim-inicio).count() << " ms" << endl;
+                estados_visitados.clear();
             }
         }
     }

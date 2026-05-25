@@ -1,5 +1,6 @@
 #ifndef PISOBAR_HPP
 #define PISOBAR_HPP
+#include <cstddef>
 
 const char bigodudos = 'b';
 const char capetas = 'c';
@@ -26,6 +27,8 @@ class PisoBar{
     public:
         PisoBar(int n_, int b_, int c_);
         PisoBar();
+        PisoBar(const PisoBar& other);
+        ~PisoBar();
         //retorna dimensão do bar
         int get_n();
         //retorna se todos os bigodudos já foram posicionados
@@ -40,6 +43,13 @@ class PisoBar{
         bool cada_bigodudo_ve_dois_capetas();
         PisoBar clone();
         void desalocaMatriz();
+        bool operator==(const PisoBar& other) const;
+        PisoBar& operator=(const PisoBar& other);
+        size_t nn();
+
+        struct PisoBarHash{
+            size_t operator()(const PisoBar& pb) const;
+        };
 
 };
 
