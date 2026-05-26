@@ -302,15 +302,21 @@ PisoBar& PisoBar::operator=(const PisoBar& other){
     return *this;
 }
 
-size_t PisoBar::PisoBarHash::operator()(const PisoBar& pb) const{
-    size_t h = 0;
+size_t PisoBar::PisoBarHash::operator()(const PisoBar& pb) const {
+    auto combine = [](size_t seed, size_t value) {
+        return seed ^ (value + 0x9e3779b97f4a7c15ULL + (seed << 6) + (seed >> 2));
+    };
 
-    for(int x = 0; x < pb.n; x++){
-        for(int y = 0; y < pb.n; y++){
-            h ^= std::hash<char>()(pb.matriz[x][y])
-                    + 0x9e3779b9
-                    + (h << 6)
-                    + (h >> 2);
+    size_t h = 0;
+    h = combine(h, std::hash<int>{}(pb.n));
+    h = combine(h, std::hash<int>{}(pb.b));
+    h = combine(h, std::hash<int>{}(pb.c));
+    h = combine(h, std::hash<int>{}(pb.b_atual));
+    h = combine(h, std::hash<int>{}(pb.c_atual));
+
+    for (int x = 0; x < pb.n; ++x) {
+        for (int y = 0; y < pb.n; ++y) {
+            h = combine(h, std::hash<char>{}(pb.matriz[x][y]));
         }
     }
 
