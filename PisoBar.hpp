@@ -23,6 +23,7 @@ class PisoBar{
         char** matriz;
         //função auxiliar privada
         bool priv_bigodudo_ve_dois_capetas(int x, int y);
+        void desalocaMatriz();
 
     public:
         PisoBar(int n_, int b_, int c_);
@@ -30,7 +31,7 @@ class PisoBar{
         PisoBar(const PisoBar& other);
         ~PisoBar();
         //retorna dimensão do bar
-        int get_n();
+        int size();
         //retorna se todos os bigodudos já foram posicionados
         bool bigodudos_prontos();
         //retorna se todos os capetas já foram posicionados
@@ -41,8 +42,6 @@ class PisoBar{
         bool add_c(int x, int y);
         //verifica se todos os bigodudos conseguem ver pelo menos 2 capetas
         bool cada_bigodudo_ve_dois_capetas();
-        PisoBar clone();
-        void desalocaMatriz();
         bool operator==(const PisoBar& other) const;
         PisoBar& operator=(const PisoBar& other);
 

@@ -49,7 +49,7 @@ PisoBar::~PisoBar(){
     this->desalocaMatriz();
 }
 
-int PisoBar::get_n(){return this->n;}
+int PisoBar::size(){return this->n;}
 
 bool PisoBar::bigodudos_prontos(){return this->b_atual == this->b;}
 bool PisoBar::capetas_prontos(){return this->c_atual == this->c;}
@@ -240,22 +240,6 @@ bool PisoBar::priv_bigodudo_ve_dois_capetas(int x, int y){
 
     if(capetas_em_vista < 2) return false;
     return true;    
-}
-
-PisoBar PisoBar::clone(){
-    PisoBar clone = PisoBar();
-    clone.n = this->n;
-    clone.b = this->b;
-    clone.c = this->c;
-    clone.b_atual = this->b_atual;
-    clone.c_atual = this->c_atual;
-    clone.matriz = alocaMatriz(this->n);
-    for(int x = 0; x < this->n; x++){
-        for(int y = 0; y < this->n; y++){
-            clone.matriz[x][y] = this->matriz[x][y];
-        }
-    }
-    return clone;
 }
 
 void PisoBar::desalocaMatriz(){
