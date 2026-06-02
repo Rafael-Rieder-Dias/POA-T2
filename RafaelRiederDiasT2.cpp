@@ -1,8 +1,5 @@
 #include <iostream>
-#include "PisoBar.hpp"
 #include "Funcoes.hpp"
-#include <unordered_set>
-#include <vector>
 #include <thread>
 
 using namespace std;
@@ -10,6 +7,8 @@ using namespace std;
 int n = 0; int b = 0; int c = 0;
 unsigned long long solucoes = 0;
 unordered_set<PisoBar, PisoBar::PisoBarHash> estados_visitados = unordered_set<PisoBar, PisoBar::PisoBarHash>();
+list<PisoBar> nivel1_1;
+list<PisoBar> nivel1_2;
 mutex mx = mutex();
 vector<PisoBar> bigodudos1;
 vector<PisoBar> bigodudos2;
@@ -24,15 +23,43 @@ vector<PisoBar> bigodudos2;
  */
 
 void f1(){
-    for(PisoBar pb: bigodudos1){
-        posicionaCapetasMT(pb);
+    for(PisoBar pb: nivel1_1){
+        posicionaBigodudosMT(pb);
     }
+    cout << "f1" << endl;
 }
 
 void f2(){
+    for(PisoBar pb: nivel1_2){
+        posicionaBigodudosMT(pb);
+    }
+    cout << "f2" << endl;
+}
+
+void f3(){
+    for(PisoBar pb: bigodudos1){
+        posicionaCapetasMT(pb);
+    }
+    cout << "f3" << endl;
+}
+
+void f4(){
     for(PisoBar pb: bigodudos2){
         posicionaCapetasMT(pb);
     }
+    cout << "f4" << endl;
+}
+
+void aux(){
+    thread t3(f3);
+    thread t4(f4);
+
+    t3.join();
+    t4.join();
+
+    cout << "Capetas posicionados." << endl;
+
+    cout << "Numero de solucoes: " << solucoes << endl;
 }
 
 int main(int argc, char* argv[]){
@@ -56,8 +83,11 @@ int main(int argc, char* argv[]){
     }
     bigodudos1.reserve(10000);
     bigodudos2.reserve(10000);
+    nivel1_1 = list<PisoBar>();
+    nivel1_2 = list<PisoBar>();
 
-    posicionaBigodudosMT(PisoBar(n,b,c));
+    nivel1(PisoBar(n,b,c));
+    cout << "nivel 1" << endl;
 
     thread t1(f1);
     thread t2(f2);
@@ -65,5 +95,6 @@ int main(int argc, char* argv[]){
     t1.join();
     t2.join();
 
-    cout << "Numero de solucoes: " << solucoes << endl;
+    cout << "Bigodudos posicionados." << endl;
+    aux();
 }
