@@ -9,9 +9,12 @@ unsigned long long solucoes = 0;
 unordered_set<PisoBar, PisoBar::PisoBarHash> estados_visitados = unordered_set<PisoBar, PisoBar::PisoBarHash>();
 list<PisoBar> nivel1_1;
 list<PisoBar> nivel1_2;
-mutex mx = mutex();
+mutex mx_set = mutex();
+mutex mx_vecs_big = mutex();
+mutex mx_sol = mutex();
 vector<PisoBar> bigodudos1;
 vector<PisoBar> bigodudos2;
+vector<PisoBar> bigodudos3;
 
 /**
  * [...] os pistoleiros podiam se “enxergar” como se fossem rainhas do jogo de xadrez, olhando
@@ -50,12 +53,21 @@ void f4(){
     cout << "f4" << endl;
 }
 
+void f5(){
+    for(PisoBar pb: bigodudos3){
+        posicionaCapetasMT(pb);
+    }
+    cout << "f5" << endl;
+}
+
 void aux(){
     thread t3(f3);
     thread t4(f4);
+    thread t5(f5);
 
     t3.join();
     t4.join();
+    t5.join();
 
     cout << "Capetas posicionados." << endl;
 
@@ -83,6 +95,7 @@ int main(int argc, char* argv[]){
     }
     bigodudos1.reserve(10000);
     bigodudos2.reserve(10000);
+    bigodudos3.reserve(10000);
     nivel1_1 = list<PisoBar>();
     nivel1_2 = list<PisoBar>();
 

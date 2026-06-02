@@ -1,40 +1,5 @@
 #include "Funcoes.hpp"
 
-void posicionaBigodudos(PisoBar pb){
-    PisoBar aux = pb;
-
-    for(int x = 0; x < pb.size(); x++){
-        for(int y = 0; y < pb.size(); y++){
-            if(aux.add_b(x,y)){
-                if(!estados_visitados.contains(aux)){
-                    estados_visitados.insert(aux);
-                    if(aux.bigodudos_prontos()) posicionaCapetas(aux);
-                    else posicionaBigodudos(aux);
-                }
-                aux = pb;
-            }
-        }
-    }
-}
-
-void posicionaCapetas(PisoBar pb){
-    PisoBar aux = pb;
-
-    for(int x = 0; x < pb.size(); x++){
-        for(int y = 0; y < pb.size(); y++){
-            if(aux.add_c(x,y)){
-                if(!estados_visitados.contains(aux)){
-                    estados_visitados.insert(aux);
-                    if(aux.capetas_prontos()){
-                        if(aux.cada_bigodudo_ve_dois_capetas()) solucoes++;
-                    }else posicionaCapetas(aux);
-                }
-                aux = pb;
-            }
-        }
-    }
-}
-
 void nivel1(PisoBar pb){
     PisoBar aux = pb;
 
@@ -57,8 +22,8 @@ void posicionaBigodudosMT(PisoBar pb){
     for(int x = 0; x < pb.size(); x++){
         for(int y = 0; y < pb.size(); y++){
             if(aux.add_b(x,y)){
-                if(!estados_visitados.contains(aux)){
-                    insert(aux);
+                if(insert(aux)){
+                    
                     if(aux.bigodudos_prontos()) insertListaBigMT(aux);
                     else posicionaBigodudosMT(aux);
                 }
@@ -74,8 +39,8 @@ void posicionaCapetasMT(PisoBar pb){
     for(int x = 0; x < pb.size(); x++){
         for(int y = 0; y < pb.size(); y++){
             if(aux.add_c(x,y)){
-                if(!estados_visitados.contains(aux)){
-                    insert(aux);
+                if(insert(aux)){
+                    
                     if(aux.capetas_prontos()){
                         if(aux.cada_bigodudo_ve_dois_capetas()) incCount();
                     }else posicionaCapetasMT(aux);
@@ -86,15 +51,11 @@ void posicionaCapetasMT(PisoBar pb){
     }
 }
 
-/*bool jaVisitou(PisoBar aux){
-    mx.lock();
-    return estados_visitados.contains(aux);
-}*/
-
-void insert(PisoBar aux){
-    mx.lock();
+bool insert(PisoBar aux){
+    lock_guard<mutex> lock(mx_set);
+    if(estados_visitados.contains(aux)) return false;
     estados_visitados.insert(aux);
-    mx.unlock();
+    return true;
 }
 
 void insertNivel1(PisoBar pb){
@@ -106,17 +67,15 @@ void insertNivel1(PisoBar pb){
 }
 
 void insertListaBigMT(PisoBar pb){
-    mx.lock();
-    if((bigodudos1.size() + bigodudos2.size())%2 == 0){
-        bigodudos1.push_back(pb);
-    }else{
-        bigodudos2.push_back(pb);
+    lock_guard<mutex> lock(mx_vecs_big);
+    switch((bigodudos1.size() + bigodudos2.size() + bigodudos3.size())%3){
+        case 0: bigodudos1.push_back(pb); break;
+        case 1: bigodudos2.push_back(pb); break;
+        case 2: bigodudos3.push_back(pb); break;
     }
-    mx.unlock();
 }
 
 void incCount(){
-    mx.lock();
+    lock_guard<mutex> lock(mx_sol);
     solucoes++;
-    mx.unlock();
 }
