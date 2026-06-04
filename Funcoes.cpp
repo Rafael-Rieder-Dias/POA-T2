@@ -6,8 +6,7 @@ void posicionaBigodudos(PisoBar pb){
     for(int x = 0; x < pb.size(); x++){
         for(int y = 0; y < pb.size(); y++){
             if(aux.add_b(x,y)){
-                if(!estados_visitados.contains(aux)){
-                    estados_visitados.insert(aux);
+                if(estados_visitados.insert(aux).second){
                     if(aux.bigodudos_prontos()) posicionaCapetas(aux);
                     else posicionaBigodudos(aux);
                 }
@@ -23,8 +22,7 @@ void posicionaCapetas(PisoBar pb){
     for(int x = 0; x < pb.size(); x++){
         for(int y = 0; y < pb.size(); y++){
             if(aux.add_c(x,y)){
-                if(!estados_visitados.contains(aux)){
-                    estados_visitados.insert(aux);
+                if(estados_visitados.insert(aux).second){
                     if(aux.capetas_prontos()){
                         if(aux.cada_bigodudo_ve_dois_capetas()) solucoes++;
                     }else posicionaCapetas(aux);
