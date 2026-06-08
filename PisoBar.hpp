@@ -1,6 +1,9 @@
 #ifndef PISOBAR_HPP
 #define PISOBAR_HPP
 #include <cstddef>
+#include <string>
+
+using namespace std;
 
 const char bigodudos = 'b';
 const char capetas = 'c';
@@ -49,6 +52,7 @@ class PisoBar{
             size_t operator()(const PisoBar& pb) const;
         };
 
+        string toString();
 };
 
 #endif

@@ -1,4 +1,6 @@
 #include "Funcoes.hpp"
+#include <string>
+#include <iostream>
 
 void posicionaBigodudos(PisoBar pb){
     PisoBar aux = pb;
@@ -24,7 +26,10 @@ void posicionaCapetas(PisoBar pb){
             if(aux.add_c(x,y)){
                 if(estados_visitados.insert(aux).second){
                     if(aux.capetas_prontos()){
-                        if(aux.cada_bigodudo_ve_dois_capetas()) solucoes++;
+                        if(aux.cada_bigodudo_ve_dois_capetas()){
+                            solucoes++;
+                            cout << aux.toString() << endl;
+                        }
                     }else posicionaCapetas(aux);
                 }
                 aux = pb;
