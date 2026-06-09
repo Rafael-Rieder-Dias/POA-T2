@@ -60,17 +60,21 @@ bool PisoBar::add(int x, int y, char p){
     int y_;
     char not_p;
     if(p == bigodudos){
+        if(b_atual >= b) return false;
         not_p = capetas;
     }else{
+        if(c_atual >= c) return false;
         not_p = bigodudos;
     }
 
+    //parte esquerda da linha
     while(x_ >= 0){
         if(matriz[x_][y] == p) return false;
         if(matriz[x_][y] == not_p) break;
         x_--;
     }
 
+    //parte direita da linha
     x_ = x+1;
     while(x_ < n){
         if(matriz[x_][y] == p) return false;
@@ -78,14 +82,15 @@ bool PisoBar::add(int x, int y, char p){
         x_++;
     }
 
+    //parte de cima da coluna
     y_ = y-1;
-
     while(y_ >= 0){
         if(matriz[x][y_] == p) return false;
         if(matriz[x][y_] == not_p) break;
         y_--;
     }
 
+    //parte de baixo da coluna
     y_ = y+1;
     while(y_ < n){
         if(matriz[x][y_] == p) return false;
@@ -93,7 +98,47 @@ bool PisoBar::add(int x, int y, char p){
         y_++;
     }
 
-    
+    //diagonais
+    x_ = x-1;
+    y_ = y-1;
+    while(x_ >= 0 && y_ >= 0){
+        if(matriz[x_][y_] == p) return false;
+        if(matriz[x_][y_] == not_p) break;
+        x_--;
+        y_--;
+    }
+
+    x_ = x-1;
+    y_ = y+1;
+    while(x_ >= 0 && y_ < n){
+        if(matriz[x_][y_] == p) return false;
+        if(matriz[x_][y_] == not_p) break;
+        x_--;
+        y_++;
+    }
+
+    x_ = x+1;
+    y_ = y-1;
+    while(x_ < n && y_ >= 0){
+        if(matriz[x_][y_] == p) return false;
+        if(matriz[x_][y_] == not_p) break;
+        x_++;
+        y_--;
+    }
+
+    x_ = x+1;
+    y_ = y+1;
+    while(x_ < n && y_ < n){
+        if(matriz[x_][y_] == p) return false;
+        if(matriz[x_][y_] == not_p) break;
+        x_++;
+        y_++;
+    }
+
+    matriz[x][y] = p;
+    if(p == bigodudos) b_atual++;
+    else c_atual++;
+    return true;
 }
 
 bool PisoBar::add_b(int x, int y){
@@ -135,6 +180,7 @@ bool PisoBar::add_b(int x, int y){
         j--;
     }
 
+    //diagonal inferior direita
     i = x + 1;
     j = y + 1;
     while(i < this->n && j < this->n){
