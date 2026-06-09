@@ -6,7 +6,7 @@
 int n = 0; int b = 0; int c = 0;
 unsigned long long solucoes = 0;
 unordered_set<PisoBar, PisoBar::PisoBarHash> estados_visitados = unordered_set<PisoBar, PisoBar::PisoBarHash>();
-unordered_set<PisoBar, PisoBar::PisoBarHash> solucoes_set = unordered_set<PisoBar, PisoBar::PisoBarHash>();
+//unordered_set<PisoBar, PisoBar::PisoBarHash> solucoes_set = unordered_set<PisoBar, PisoBar::PisoBarHash>();
 
 /**
  * [...] os pistoleiros podiam se “enxergar” como se fossem rainhas do jogo de xadrez, olhando
@@ -39,14 +39,14 @@ int main(int argc, char* argv[]){
 
     recursao(PisoBar(n,b,c));
 
-    cout << "Numero de solucoes: " << solucoes_set.size() << endl;
+    cout << "Numero de solucoes: " << solucoes << endl;
 
     /*PisoBar::PisoBarHash hash;
     set<size_t> hashs;*/
-    for(PisoBar pb: solucoes_set){
+    /*for(PisoBar pb: solucoes_set){
         cout << pb.toString() << endl;
         //hashs.insert(hash.operator()(pb));
-    }
+    }*/
 
     //cout << hashs.size() << endl;
 }

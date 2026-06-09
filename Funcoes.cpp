@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-void posicionaBigodudos(PisoBar pb){
+/*void posicionaBigodudos(PisoBar pb){
     PisoBar aux = pb;
 
     for(int x = 0; x < pb.size(); x++){
@@ -36,7 +36,7 @@ void posicionaCapetas(PisoBar pb){
             }
         }
     }
-}
+}*/
 
 void recursao(PisoBar pb){
     PisoBar aux = pb;
@@ -48,7 +48,7 @@ void recursao(PisoBar pb){
                     if(estados_visitados.insert(aux).second){
                         if(!(aux.bigodudos_prontos() && aux.capetas_prontos())){
                             recursao(aux);
-                        }else {solucoes++; solucoes_set.insert(aux);}
+                        }else {solucoes++; /*solucoes_set.insert(aux);*/}
                     }
                     aux = pb;
                 }
@@ -58,7 +58,7 @@ void recursao(PisoBar pb){
                     if(estados_visitados.insert(aux).second){
                         if(!(aux.bigodudos_prontos() && aux.capetas_prontos())){
                             recursao(aux);
-                        }else {solucoes++; solucoes_set.insert(aux);}
+                        }else {solucoes++; /*solucoes_set.insert(aux);*/}
                     }
                     aux = pb;
                 }
