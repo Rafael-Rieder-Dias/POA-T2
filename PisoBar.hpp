@@ -43,10 +43,6 @@ class PisoBar{
         bool capetas_prontos();
         //adiciona um pistoleiro
         bool add(int x, int y, char p);
-        /*//adiciona um bigodudo (ainda não há capetas para saber se o bigodudo conseguirá ver 2)
-        bool add_b(int x, int y);
-        //adiciona um capeta (verificar que desta posição dá para ver pelo menos 2 bigodudos)
-        bool add_c(int x, int y);*/
         //verifica se todos os bigodudos conseguem ver pelo menos 2 capetas
         bool cada_bigodudo_ve_dois_capetas();
         //verifica se todos os capetas conseguem ver pelo menos 2 bigodudos

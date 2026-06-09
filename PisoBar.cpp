@@ -141,133 +141,6 @@ bool PisoBar::add(int x, int y, char p){
     return true;
 }
 
-/*bool PisoBar::add_b(int x, int y){
-    if(this->b_atual == this->b) return false;
-
-    if(x >= this->n || y >= this->n) return false;
-
-    if(this->matriz[x][y] != 0) return false;
-
-    for(int i = 0; i < this->n; i++){
-        if(this->matriz[x][i] == bigodudos) return false;
-        if(this->matriz[i][y] == bigodudos) return false;
-    }
-
-    //diagonal superior esquerda
-    int i = x - 1;
-    int j = y - 1;
-    while(i >= 0 && j >= 0){
-        if(this->matriz[i][j] == bigodudos) return false;
-        i--;
-        j--;
-    }
-
-    //diagonal superior direita
-    i = x - 1;
-    j = y + 1;
-    while(i >= 0 && j < this->n){
-        if(this->matriz[i][j] == bigodudos) return false;
-        i--;
-        j++;
-    }
-
-    //diagonal inferior esquerda
-    i = x + 1;
-    j = y - 1;
-    while(i < this->n && j >= 0){
-        if(this->matriz[i][j] == bigodudos) return false;
-        i++;
-        j--;
-    }
-
-    //diagonal inferior direita
-    i = x + 1;
-    j = y + 1;
-    while(i < this->n && j < this->n){
-        if(this->matriz[i][j] == bigodudos) return false;
-        i++;
-        j++;
-    }
-
-    this->matriz[x][y] = bigodudos;
-    this->b_atual++;
-    return true;
-}
-
-bool PisoBar::add_c(int x, int y){
-    if(this->c_atual == this->c) return false;
-
-    if(x >= this->n || y >= this->n) return false;
-
-    if(this->matriz[x][y] != 0) return false;
-
-    int bigodudos_em_vista = 0;
-
-    for(int i = 0; i < this->n; i++){
-        if(this->matriz[x][i] == capetas){
-            return false;
-        }else if(this->matriz[x][i] == bigodudos) bigodudos_em_vista++;
-        
-
-        if(this->matriz[i][y] == capetas){
-            return false;
-        }else if(this->matriz[x][i] == bigodudos) bigodudos_em_vista++;
-        
-    }
-
-    //diagonal superior esquerda
-    int i = x - 1;
-    int j = y - 1;
-    while(i >= 0 && j >= 0){
-        if(this->matriz[i][j] == capetas){
-            return false;
-        }else if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
-        
-        i--;
-        j--;
-    }
-
-    //diagonal superior direita
-    i = x - 1;
-    j = y + 1;
-    while(i >= 0 && j < this->n){
-        if(this->matriz[i][j] == capetas){
-            return false;
-        }else if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
-        
-        i--;
-        j++;
-    }
-
-    //diagonal inferior esquerda
-    i = x + 1;
-    j = y - 1;
-    while(i < this->n && j >= 0){
-        if(this->matriz[i][j] == capetas){
-            return false;
-        }else if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
-        
-        i++;
-        j--;
-    }
-
-    i = x + 1;
-    j = y + 1;
-    while(i < this->n && j < this->n){
-        if(this->matriz[i][j] == capetas){
-            return false;
-        }else if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
-        
-        i++;
-        j++;
-    }
-
-    if(bigodudos_em_vista < 2) return false;
-    this->matriz[x][y] = capetas;
-    this->c_atual++;
-    return true;
-}*/
-
 bool PisoBar::cada_bigodudo_ve_dois_capetas(){
     for(int x = 0; x < this->n; x++){
         for(int y = 0; y < this->n; y++){
@@ -292,19 +165,54 @@ bool PisoBar::cada_capeta_ve_dois_bigodudos(){
 
 bool PisoBar::priv_bigodudo_ve_dois_capetas(int x, int y){
     int capetas_em_vista = 0;
+    int i = x - 1;
 
-    for(int i = 0; i < this->n; i++){
-        if(this->matriz[x][i] == capetas) capetas_em_vista++;
-        if(this->matriz[i][y] == capetas) capetas_em_vista++;
+    while(i >= 0){
+        if(matriz[i][y] == capetas){
+            capetas_em_vista++;
+            break;
+        }
+        i--;
     }
+
+    i = x + 1;
+    while(i < n){
+        if(matriz[i][y] == capetas){
+            capetas_em_vista++;
+            break;
+        }
+        i++;
+    }
+
+    int j = y - 1;
+    while(j >= 0){
+        if(matriz[x][j] == capetas){
+            capetas_em_vista++;
+            break;
+        }
+        j--;
+    }
+
+    j = y + 1;
+    while(j < n){
+        if(matriz[x][j] == capetas){
+            capetas_em_vista++;
+            break;
+        }
+        j++;
+    }
+    
 
     if(capetas_em_vista >= 2) return true;
 
     //diagonal superior esquerda
-    int i = x - 1;
-    int j = y - 1;
+    i = x - 1;
+    j = y - 1;
     while(i >= 0 && j >= 0){
-        if(this->matriz[i][j] == capetas) capetas_em_vista++;
+        if(this->matriz[i][j] == capetas){
+            capetas_em_vista++;
+            break;
+        }
         i--;
         j--;
     }
@@ -313,7 +221,10 @@ bool PisoBar::priv_bigodudo_ve_dois_capetas(int x, int y){
     i = x - 1;
     j = y + 1;
     while(i >= 0 && j < this->n){
-        if(this->matriz[i][j] == capetas) capetas_em_vista++;
+        if(this->matriz[i][j] == capetas){
+            capetas_em_vista++;
+            break;
+        }
         i--;
         j++;
     }
@@ -324,7 +235,10 @@ bool PisoBar::priv_bigodudo_ve_dois_capetas(int x, int y){
     i = x + 1;
     j = y - 1;
     while(i < this->n && j >= 0){
-        if(this->matriz[i][j] == capetas) capetas_em_vista++;
+        if(this->matriz[i][j] == capetas){
+            capetas_em_vista++;
+            break;
+        }
         i++;
         j--;
     }
@@ -332,30 +246,67 @@ bool PisoBar::priv_bigodudo_ve_dois_capetas(int x, int y){
     i = x + 1;
     j = y + 1;
     while(i < this->n && j < this->n){
-        if(this->matriz[i][j] == capetas) capetas_em_vista++;
+        if(this->matriz[i][j] == capetas){
+            capetas_em_vista++;
+            break;
+        }
         i++;
         j++;
     }
 
     if(capetas_em_vista < 2) return false;
-    return true;    
+    return true;
 }
 
 bool PisoBar::priv_capeta_ve_dois_bigodudos(int x, int y){
     int bigodudos_em_vista = 0;
+    int i = x - 1;
 
-    for(int i = 0; i < this->n; i++){
-        if(this->matriz[x][i] == bigodudos) bigodudos_em_vista++;
-        if(this->matriz[i][y] == bigodudos) bigodudos_em_vista++;
+    while(i >= 0){
+        if(matriz[i][y] == bigodudos){
+            bigodudos_em_vista++;
+            break;
+        }
+        i--;
+    }
+
+    i = x + 1;
+    while(i < n){
+        if(matriz[i][y] == bigodudos){
+            bigodudos_em_vista++;
+            break;
+        }
+        i++;
+    }
+
+    int j = y - 1;
+    while(j >= 0){
+        if(matriz[x][j] == bigodudos){
+            bigodudos_em_vista++;
+            break;
+        }
+        j--;
+    }
+
+    j = y + 1;
+    while(j < n){
+        if(matriz[x][j] == bigodudos){
+            bigodudos_em_vista++;
+            break;
+        }
+        j++;
     }
 
     if(bigodudos_em_vista >= 2) return true;
 
     //diagonal superior esquerda
-    int i = x - 1;
-    int j = y - 1;
+    i = x - 1;
+    j = y - 1;
     while(i >= 0 && j >= 0){
-        if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
+        if(this->matriz[i][j] == bigodudos){
+            bigodudos_em_vista++;
+            break;
+        }
         i--;
         j--;
     }
@@ -364,7 +315,10 @@ bool PisoBar::priv_capeta_ve_dois_bigodudos(int x, int y){
     i = x - 1;
     j = y + 1;
     while(i >= 0 && j < this->n){
-        if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
+        if(this->matriz[i][j] == bigodudos){
+            bigodudos_em_vista++;
+            break;
+        }
         i--;
         j++;
     }
@@ -375,7 +329,10 @@ bool PisoBar::priv_capeta_ve_dois_bigodudos(int x, int y){
     i = x + 1;
     j = y - 1;
     while(i < this->n && j >= 0){
-        if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
+        if(this->matriz[i][j] == bigodudos){
+            bigodudos_em_vista++;
+            break;
+        }
         i++;
         j--;
     }
@@ -383,7 +340,10 @@ bool PisoBar::priv_capeta_ve_dois_bigodudos(int x, int y){
     i = x + 1;
     j = y + 1;
     while(i < this->n && j < this->n){
-        if(this->matriz[i][j] == bigodudos) bigodudos_em_vista++;
+        if(this->matriz[i][j] == bigodudos){
+            bigodudos_em_vista++;
+            break;
+        }
         i++;
         j++;
     }
