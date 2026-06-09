@@ -10,5 +10,6 @@ extern unordered_set<PisoBar, PisoBar::PisoBarHash> estados_visitados;
 
 void posicionaBigodudos(PisoBar pb);
 void posicionaCapetas(PisoBar pb);
+void recursao(PisoBar pb);
 
 #endif

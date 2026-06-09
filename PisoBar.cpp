@@ -52,6 +52,50 @@ int PisoBar::size(){return this->n;}
 bool PisoBar::bigodudos_prontos(){return this->b_atual == this->b;}
 bool PisoBar::capetas_prontos(){return this->c_atual == this->c;}
 
+bool PisoBar::add(int x, int y, char p){
+    if(matriz[x][y] != 0) return false;
+    if(x >= this->n || y >= this->n) return false;
+
+    int x_ = x-1;
+    int y_;
+    char not_p;
+    if(p == bigodudos){
+        not_p = capetas;
+    }else{
+        not_p = bigodudos;
+    }
+
+    while(x_ >= 0){
+        if(matriz[x_][y] == p) return false;
+        if(matriz[x_][y] == not_p) break;
+        x_--;
+    }
+
+    x_ = x+1;
+    while(x_ < n){
+        if(matriz[x_][y] == p) return false;
+        if(matriz[x_][y] == not_p) break;
+        x_++;
+    }
+
+    y_ = y-1;
+
+    while(y_ >= 0){
+        if(matriz[x][y_] == p) return false;
+        if(matriz[x][y_] == not_p) break;
+        y_--;
+    }
+
+    y_ = y+1;
+    while(y_ < n){
+        if(matriz[x][y_] == p) return false;
+        if(matriz[x][y_] == not_p) break;
+        y_++;
+    }
+
+    
+}
+
 bool PisoBar::add_b(int x, int y){
     if(this->b_atual == this->b) return false;
 
