@@ -48,7 +48,9 @@ void recursao(PisoBar pb){
                     if(estados_visitados.insert(aux).second){
                         if(!(aux.bigodudos_prontos() && aux.capetas_prontos())){
                             recursao(aux);
-                        }else {solucoes++; /*solucoes_set.insert(aux);*/}
+                        }else{
+                            if(aux.cada_bigodudo_ve_dois_capetas() && aux.cada_capeta_ve_dois_bigodudos()) {solucoes++; solucoes_set.insert(aux);}
+                        }
                     }
                     aux = pb;
                 }
@@ -58,7 +60,9 @@ void recursao(PisoBar pb){
                     if(estados_visitados.insert(aux).second){
                         if(!(aux.bigodudos_prontos() && aux.capetas_prontos())){
                             recursao(aux);
-                        }else {solucoes++; /*solucoes_set.insert(aux);*/}
+                        }else{
+                            if(aux.cada_bigodudo_ve_dois_capetas() && aux.cada_capeta_ve_dois_bigodudos()) {solucoes++; solucoes_set.insert(aux);}
+                        }
                     }
                     aux = pb;
                 }
