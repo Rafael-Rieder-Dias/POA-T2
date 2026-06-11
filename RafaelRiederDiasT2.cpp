@@ -26,12 +26,12 @@ int main(int argc, char* argv[]){
     c = stoi(argv[3]);
 
     if(b < 2 || c < 2){
-        cout << "Cada quadrilha deve ter pelo menos 2 pistoleiros." << endl;
+        cout << 0 << endl;
         exit(0);
     }
 
     if(b + c > n*n){
-        cout << "O numero total de pistoleiros deve ser menor que n²." << endl;
+        cout << 0 << endl;
         exit(0);
     }
 

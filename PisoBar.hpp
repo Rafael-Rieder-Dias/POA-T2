@@ -36,6 +36,10 @@ class PisoBar{
         ~PisoBar();
         //retorna dimensão do bar
         int size();
+        //quantidade atual de bigodudos
+        int b__atual();
+        //quantidade atual de capetas
+        int c__atual();
         //retorna se todos os bigodudos já foram posicionados
         bool bigodudos_prontos();
         //retorna se todos os capetas já foram posicionados

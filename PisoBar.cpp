@@ -48,6 +48,8 @@ PisoBar::~PisoBar(){
 }
 
 int PisoBar::size(){return this->n;}
+int PisoBar::b__atual(){return this->b_atual;}
+int PisoBar::c__atual(){return this->c_atual;}
 
 bool PisoBar::bigodudos_prontos(){return this->b_atual == this->b;}
 bool PisoBar::capetas_prontos(){return this->c_atual == this->c;}
