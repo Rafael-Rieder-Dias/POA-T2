@@ -7,7 +7,6 @@ using namespace std;
 
 extern unsigned long long solucoes;
 extern unordered_set<PisoBar, PisoBar::PisoBarHash> estados_visitados;
-//extern unordered_set<PisoBar, PisoBar::PisoBarHash> solucoes_set;
 
 void recursao(PisoBar pb);
 
