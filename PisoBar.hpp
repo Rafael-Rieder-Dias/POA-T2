@@ -1,7 +1,6 @@
 #ifndef PISOBAR_HPP
 #define PISOBAR_HPP
 #include <cstddef>
-#include <string>
 
 using namespace std;
 
@@ -53,8 +52,6 @@ class PisoBar{
         struct PisoBarHash{
             size_t operator()(const PisoBar& pb) const;
         };
-
-        string toString();
 };
 
 #endif

@@ -416,24 +416,3 @@ size_t PisoBar::PisoBarHash::operator()(const PisoBar& pb) const {
 
     return h;
 }
-
-string PisoBar::toString(){
-    string s;
-    s.reserve(n*n+3);
-
-    for(int y = 0; y < n; y++){
-        for(int x = 0; x < n; x++){
-            if(matriz[x][y] == 0){
-                s += '0';
-            }else{
-                s += matriz[x][y];
-            }
-            if(x < n-1){
-                s += ' ';
-            }
-        }
-        s += '\n';
-    }
-
-    return s;
-}

@@ -1,6 +1,4 @@
 #include "Funcoes.hpp"
-#include <string>
-#include <iostream>
 
 void recursao(PisoBar pb){
     PisoBar aux = pb;
@@ -13,7 +11,7 @@ void recursao(PisoBar pb){
                         if(!(aux.bigodudos_prontos() && aux.capetas_prontos())){
                             recursao(aux);
                         }else{
-                            if(aux.cada_bigodudo_ve_dois_capetas() && aux.cada_capeta_ve_dois_bigodudos()) {solucoes++;/* solucoes_set.insert(aux);*/}
+                            if(aux.cada_bigodudo_ve_dois_capetas() && aux.cada_capeta_ve_dois_bigodudos()) {solucoes++;}
                         }
                     }
                     aux = pb;
@@ -25,7 +23,7 @@ void recursao(PisoBar pb){
                         if(!(aux.bigodudos_prontos() && aux.capetas_prontos())){
                             recursao(aux);
                         }else{
-                            if(aux.cada_bigodudo_ve_dois_capetas() && aux.cada_capeta_ve_dois_bigodudos()) {solucoes++;/* solucoes_set.insert(aux);*/}
+                            if(aux.cada_bigodudo_ve_dois_capetas() && aux.cada_capeta_ve_dois_bigodudos()) {solucoes++;}
                         }
                     }
                     aux = pb;
